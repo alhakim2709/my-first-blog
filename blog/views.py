@@ -23,7 +23,7 @@ def post_new(request):
                 return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
-    return render(request, 'blog/post_edit.html', {'form': form, 'message':'Oops!'})
+    return render(request, 'blog/post_edit.html', {'form': form})
 
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -38,3 +38,8 @@ def post_edit(request, pk):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+
+def post_delete(request, pk):
+    post = Post.objects.filter(pk=pk)
+    post.delete()
+    return post_list(request)
